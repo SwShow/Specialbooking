@@ -51,7 +51,7 @@ const shuffle = (mean) => {
 }
 
 // создание массива конечного значения
-const array = () => {
+const arrays = () => {
   const array = [];
   for (let i = 0; i < 10; i++) {
     array.push(
@@ -75,5 +75,4 @@ const array = () => {
   }
   return array;
 }
-
-export { array };
+export { arrays };

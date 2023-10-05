@@ -1,5 +1,8 @@
-import { array } from './util.js';
+import { arrays } from './util.js';
+import { addedData } from './preview.js';
 
+const data = arrays();
 // вывод конечного значения
 // eslint-disable-next-line no-console
-console.log(JSON.stringify(array(), null, ' '));
+//console.log(JSON.stringify(data, null, ' '));
+addedData(data);
