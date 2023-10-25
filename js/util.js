@@ -1,5 +1,5 @@
 /*Функция, возвращающая случайное целое число из переданного диапазона включительно.*/
-import { check, types, descriptions, meanPhotos, meanFeatures } from './data.js';
+import {check, descriptions, meanFeatures, meanPhotos, types} from './data.js';
 
 const randInt = (min, max) => {
   if (min < 0 || max < 0) {
@@ -20,20 +20,19 @@ const randSwimPoint = (min, max) => {
   if (max < min) {
     [min, max] = [max, min];
   }
-  return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(5);
+  return (Math.random() * (max - min) + min).toFixed(5);
 }
 
 const location = (a, b) => {
   return randSwimPoint(a, b);
 }
 
+
 const coordinates = () => {
-  const address = [];
-  address.push({
-    lat: location(35.65000, 35.70000),
-    lon: location(139.70000, 139.80000),
-  });
-  return address;
+  return {
+    lat: location(35.55000, 35.80000),
+    lng: location(139.60000, 139.90000),
+  };
 }
 
 const shuffle = (mean) => {
@@ -76,3 +75,4 @@ const arrays = () => {
   return array;
 }
 export { arrays };
+export { coordinates };
