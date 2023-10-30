@@ -58,7 +58,11 @@ data.forEach((element) => {
 
   marker
     .addTo(map)
-    .bindPopup(addedData(element));
+    .bindPopup(addedData(element),
+      {
+        keepInView: true,
+      },
+    );
 });
 
 

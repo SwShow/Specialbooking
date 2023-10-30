@@ -1,5 +1,4 @@
 const card = document.querySelector('#card').content.querySelector('.popup');
-//const mapCanvas = document.querySelector('.map__canvas');
 
 const TYPE = {
   flat: 'Квартира',
@@ -39,7 +38,7 @@ const removedFeatures = (feature, popupFeatures) => {
   }
 };
 const addedData = (data) => {
-//  for (let i = 0; i < data.length; i++) {
+
   const element = card.cloneNode(true);
   const fragmentElement = document.createDocumentFragment();
   const photoAvatar = element.querySelector('.popup__avatar');
@@ -67,10 +66,7 @@ const addedData = (data) => {
   removedFeatures(feature, popupFeatures);
 
   fragmentElement.append(element);
-  //mapCanvas.appendChild(fragmentElement);
   return fragmentElement;
-  //  }
-
 }
 export { addedData };
 

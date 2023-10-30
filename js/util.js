@@ -61,7 +61,7 @@ const arrays = () => {
             TITLE: 'WELCOME, TOURISTS',
             address: coordinates(),
             price: randInt(1000, 10000),
-            type: types[randInt(0, 3)],
+            type: types[randInt(0, 4)],
             rooms: randInt(1, 3),
             guests: randInt(1, 3),
             checkin: check[randInt(0, 2)],
