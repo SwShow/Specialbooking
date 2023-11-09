@@ -5,6 +5,7 @@ const TYPE = {
   bungalow: 'Бунгало',
   house: 'Дом',
   palace: 'Дворец',
+  hotel: 'Отель',
 };
 
 const addedPhotos = (images, photoOffer) => {
@@ -47,10 +48,9 @@ const addedData = (data) => {
   } else {
     photoAvatar.remove();
   }
-  element.querySelector('h3').textContent = data.offer.TITLE;
-  element.querySelector('.popup__text--address').textContent = `lat: ${data.offer.address.lat}, lng: ${data.offer.address.lng}`;
-  const price = element.querySelector('.popup__text--price');
-  price.textContent = `${data.offer.price} ₽/ночь`;
+  element.querySelector('h3').textContent = data.offer.title;
+  element.querySelector('.popup__text--address').textContent = data.offer.address;
+  element.querySelector('.popup__text--price').textContent = `${data.offer.price} P/ночь`;
   element.querySelector('.popup__type').textContent = TYPE[data.offer.type];
   element.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} комнаты для
       ${data.offer.guests} гостей`;

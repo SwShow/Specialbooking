@@ -7,7 +7,7 @@ const check = [
 const types = [
   'palace',
   'flat',
-  'hostel',
+  'hotel',
   'house',
   'bungalow',
 ];

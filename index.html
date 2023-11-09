@@ -35,7 +35,7 @@
           <option value="any" selected>Любой тип жилья</option>
           <option value="flat">Квартира</option>
           <option value="bungalow">Бунгало</option>
-          <option value="hostel">Отель</option>
+          <option value="hotel">Отель</option>
           <option value="house">Дом</option>
           <option value="palace">Дворец</option>
         </select>
@@ -139,7 +139,7 @@
         <select id="type" name="type">
           <option value="bungalow">Бунгало</option>
           <option value="flat" selected>Квартира</option>
-          <option value="hostel">Отель</option>
+          <option value="hotel">Отель</option>
           <option value="house">Дом</option>
           <option value="palace">Дворец</option>
         </select>
@@ -155,23 +155,23 @@
           switch (type.value) {
             case 'bungalow':
               price.min = 0;
-              price.value = 0;
+              price.placeholder= 0;
               break;
             case 'flat':
               price.min = 1000;
-              price.value = 1000;
+              price.placeholder= 1000;
               break;
-            case 'hostel':
+            case 'hotel':
               price.min = 3000;
-              price.value = 3000;
+              price.placeholder = 3000;
               break;
             case 'house':
               price.min = 5000;
-              price.value = 5000;
+              price.placeholder = 5000;
               break;
             case 'palace':
               price.min = 10000;
-              price.value = 10000;
+              price.placeholder = 10000;
               break;
           }
         };

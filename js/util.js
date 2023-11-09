@@ -58,8 +58,8 @@ const arrays = () => {
         avatar: 'img/avatars/user0' + randInt(1, 8) + '.png',
         offer:
           {
-            TITLE: 'WELCOME, TOURISTS',
-            address: coordinates(),
+            title: 'WELCOME, TOURISTS',
+            address: '105-0016 Tokio-to, Minato-ku',
             price: randInt(1000, 10000),
             type: types[randInt(0, 4)],
             rooms: randInt(1, 3),
@@ -70,9 +70,9 @@ const arrays = () => {
             description: descriptions[randInt(0, 3)],
             photos: shuffle(meanPhotos),
           },
+        location: coordinates(),
       });
   }
   return array;
 }
 export { arrays };
-export { coordinates };
