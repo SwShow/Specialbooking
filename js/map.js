@@ -1,5 +1,6 @@
-import {arrays} from './util.js';
+//import {arrays} from './util.js';
 import {addedData} from './preview.js';
+//import {backData} from './api.js';
 
 const LAT = 35.681729;
 const LNG = 139.753927;
@@ -11,7 +12,7 @@ const map = L.map(mapCanvas)
   .setView({
     lat: LAT,
     lng: LNG,
-  }, 10);
+  }, 13);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -20,7 +21,7 @@ L.tileLayer(
   },
 ).addTo(map);
 
-const data = arrays();
+//const data = arrays();
 const primaryMarker = L.marker(
   {
     lat: LAT,
@@ -39,13 +40,13 @@ const primaryMarker = L.marker(
 primaryMarker.on('drag', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
   address.value = `lat: ${lat.toFixed(6)}, lng: ${lng.toFixed(6)}`;
-})
-data.forEach((element) => {
+});
 
+const posting = (el) => {
   const marker = L.marker(
     {
-      lat: +(element.offer.address.lat),
-      lng: +(element.offer.address.lng),
+      lat: +(el.location.lat),
+      lng: +(el.location.lng),
     },
     {
       icon: L.icon({
@@ -58,15 +59,11 @@ data.forEach((element) => {
 
   marker
     .addTo(map)
-    .bindPopup(addedData(element),
+    .bindPopup(addedData(el),
       {
         keepInView: true,
       },
     );
-});
-
-
-
-
+};
 
 

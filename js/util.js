@@ -55,7 +55,7 @@ const arrays = () => {
   for (let i = 0; i < 10; i++) {
     array.push(
       {
-        avatar: 'img/avatars/user0' + randInt(1, 8) + '.png',
+        author: { avatar: 'img/avatars/user0' + randInt(1, 8) + '.png'},
         offer:
           {
             title: 'WELCOME, TOURISTS',
