@@ -37,20 +37,21 @@ const removedFeatures = (feature, popupFeatures) => {
   if (!(feature.includes('conditioner'))) {
     popupFeatures.querySelector('.popup__feature--conditioner').classList.add('hidden');
   }
+  return popupFeatures;
 };
 const addedData = (data) => {
 
   const element = card.cloneNode(true);
-  const fragmentElement = document.createDocumentFragment();
+  //const fragmentElement = document.createDocumentFragment();
   const photoAvatar = element.querySelector('.popup__avatar');
-  if (data.avatar) {
-    photoAvatar.src = data.avatar;
+  if (data.author.avatar) {
+    photoAvatar.src = data.author.avatar;
   } else {
     photoAvatar.remove();
   }
   element.querySelector('h3').textContent = data.offer.title;
   element.querySelector('.popup__text--address').textContent = data.offer.address;
-  element.querySelector('.popup__text--price').textContent = `${data.offer.price} P/ночь`;
+  element.querySelector('.popup__text--price').textContent = `${data.offer.price} ₽/ночь`;
   element.querySelector('.popup__type').textContent = TYPE[data.offer.type];
   element.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} комнаты для
       ${data.offer.guests} гостей`;
@@ -65,8 +66,7 @@ const addedData = (data) => {
 
   removedFeatures(feature, popupFeatures);
 
-  fragmentElement.append(element);
-  return fragmentElement;
-}
-export { addedData };
+  return element;
+};
 
+export { addedData };

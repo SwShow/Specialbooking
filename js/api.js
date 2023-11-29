@@ -1,22 +1,31 @@
-const backData = (onSuccess) => {
-  const getUrl = 'https://26.javascript.pages.academy/keksobooking/data';
+import {Error, onError, Success} from './data.js';
 
-  fetch(getUrl)
-    .then((response) => response.json())
+const fetchData = (onSuccess)  => {
+  fetch('https://23.javascript.pages.academy/keksobooking/data')
+    .then(response => response.json())
+    .then((data) => onSuccess(data))
+    .catch(() => {
+      onError('Сервер не отвечает');
+    });
+};
 
-    .then((data) => {
-      onSuccess(data);
-      // eslint-disable-next-line no-console
-      console.log(data);
+const postData = (body) => {
+  fetch('https://26.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body,
+      type: 'multipart/form-data',
+    })
+    .then((response) => {
+      if (response.ok) {
+        Success();
+      } else {
+        Error();
+      }
     })
 
     .catch(() => {
-      //Ловим ошибку и показываем блок ошибки
-      // eslint-disable-next-line no-console
-      console.log('Сервер не доступен');
+      Error();
     });
 };
-backData();
-
-//export {backData};
-
+export { fetchData, postData };

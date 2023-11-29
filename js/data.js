@@ -1,3 +1,29 @@
+const error = document.querySelector('#error').content.querySelector('.error');
+const body = document.querySelector('body');
+const success = document.querySelector('#success').content.querySelector('.success');
+
+const Success = () => {
+  const cloneSuccess = success.cloneNode(true);
+  cloneSuccess.classList.remove('hidden');
+  document.addEventListener('keydown', () => {
+    cloneSuccess.classList.add('hidden');
+  });
+  body.append(cloneSuccess);
+};
+
+const Error = () => {
+  const cloneError = error.cloneNode(true);
+  cloneError.classList.remove('hidden');
+  document.addEventListener('keydown', () => {
+    cloneError.classList.add('hidden');
+  });
+  const button = cloneError.querySelector('.error__button');
+  button.onclick = () => {
+    cloneError.classList.add('hidden');
+  }
+  body.append(cloneError);
+};
+
 const check = [
   '12:00',
   '13:00',
@@ -29,4 +55,25 @@ const meanPhotos = [
   'https://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-export {check, types, descriptions, meanPhotos, meanFeatures};
+const onError = (message) => {
+  const messageError = document.createElement('div');
+  messageError.style.zIndex = '100';
+  messageError.style.position = 'absolute';
+  messageError.style.left = '0';
+  messageError.style.top = '0';
+  messageError.style.right = '0';
+  messageError.style.padding = '10px 3px';
+  messageError.style.fontSize = '30px';
+  messageError.style.textAlign = 'center';
+  messageError.style.backgroundColor = 'red';
+
+  messageError.textContent = message;
+
+  document.body.append(messageError);
+
+  setTimeout(() => {
+    messageError.remove();
+  }, 5000);
+};
+
+export {check, types, descriptions, meanPhotos, meanFeatures, Error, onError, Success};

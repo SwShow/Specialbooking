@@ -49,30 +49,27 @@ const shuffle = (mean) => {
   return arr;
 }
 
-// создание массива конечного значения
+// создание элемента массива
 const arrays = () => {
-  const array = [];
-  for (let i = 0; i < 10; i++) {
-    array.push(
+  return {
+    author: {
+      avatar: 'img/avatars/user0' + randInt(1, 8) + '.png',
+    },
+    offer:
       {
-        author: { avatar: 'img/avatars/user0' + randInt(1, 8) + '.png'},
-        offer:
-          {
-            title: 'WELCOME, TOURISTS',
-            address: '105-0016 Tokio-to, Minato-ku',
-            price: randInt(1000, 10000),
-            type: types[randInt(0, 4)],
-            rooms: randInt(1, 3),
-            guests: randInt(1, 3),
-            checkin: check[randInt(0, 2)],
-            checkout: check[randInt(0, 2)],
-            features: shuffle(meanFeatures),
-            description: descriptions[randInt(0, 3)],
-            photos: shuffle(meanPhotos),
-          },
-        location: coordinates(),
-      });
+        title: 'WELCOME, TOURISTS',
+        address: '105-0016 Tokio-to, Minato-ku',
+        price: randInt(1000, 10000),
+        type: types[randInt(0, 4)],
+        rooms: randInt(1, 3),
+        guests: randInt(1, 3),
+        checkin: check[randInt(0, 2)],
+        checkout: check[randInt(0, 2)],
+        features: shuffle(meanFeatures),
+        description: descriptions[randInt(0, 3)],
+        photos: shuffle(meanPhotos),
+      },
+    location: coordinates(),
   }
-  return array;
-}
-export { arrays };
+};
+export {arrays};

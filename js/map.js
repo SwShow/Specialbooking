@@ -1,18 +1,20 @@
-//import {arrays} from './util.js';
 import {addedData} from './preview.js';
-//import {backData} from './api.js';
+import { fetchData } from './api.js';
+
 
 const LAT = 35.681729;
 const LNG = 139.753927;
-/* global L:readonly */
+
 const mapCanvas = document.querySelector('#map-canvas');
 const address = document.querySelector('#address');
 address.value = `lat: ${LAT}, lng: ${LNG}`;
+
+/* global L:readonly */
 const map = L.map(mapCanvas)
   .setView({
     lat: LAT,
     lng: LNG,
-  }, 13);
+  }, 11);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -21,7 +23,6 @@ L.tileLayer(
   },
 ).addTo(map);
 
-//const data = arrays();
 const primaryMarker = L.marker(
   {
     lat: LAT,
@@ -41,12 +42,14 @@ primaryMarker.on('drag', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
   address.value = `lat: ${lat.toFixed(6)}, lng: ${lng.toFixed(6)}`;
 });
+const markerGroup = L.layerGroup().addTo(map);
 
-const posting = (el) => {
-  const marker = L.marker(
+const showMarker = (elem) => {
+
+  const marker =  L.marker(
     {
-      lat: +(el.location.lat),
-      lng: +(el.location.lng),
+      lat: +(elem.location.lat),
+      lng: +(elem.location.lng),
     },
     {
       icon: L.icon({
@@ -58,12 +61,18 @@ const posting = (el) => {
   );
 
   marker
-    .addTo(map)
-    .bindPopup(addedData(el),
-      {
-        keepInView: true,
-      },
-    );
+    .addTo(markerGroup)
+    .bindPopup(addedData(elem));
 };
+
+
+fetchData((data) => {
+  data.forEach((elem) => {
+    showMarker(elem);
+  });
+});
+
+
+
 
 

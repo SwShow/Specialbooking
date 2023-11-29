@@ -45,31 +45,7 @@
           <option value="middle">10000 - 50000&#x20bd;</option>
           <option value="high">от 50000&#x20bd;</option>
         </select>
-        <script>
-          const housingType = document.querySelector('#housing-type');
-          const housingPrice = document.querySelector('#housing-price');
-          housingType.onchange = () => {
-            const changePrice = () => {
-              switch (housingType.value) {
-                case 'flat':
-                  housingPrice.value = 'low';
-                  break;
-                case 'bungalow':
-                  housingPrice.value = 'middle';
-                  break;
-                case 'house':
-                  housingPrice.value = 'middle';
-                  break;
-                case 'hostel':
-                  housingPrice.value = 'middle';
-                  break;
-                case 'palace':
-                  housingPrice.value = 'high';
-              }
-            }
-            changePrice();
-          }
-        </script>
+
         <select name="housing-rooms" id="housing-rooms" class="map__filter">
           <option value="any" selected>Любое число комнат</option>
           <option value="1">Одна комната</option>
@@ -132,7 +108,7 @@
       </fieldset>
       <fieldset class="ad-form__element ad-form__element--wide">
         <label class="ad-form__label" for="address">Адрес (координаты)</label>
-        <input id="address" name="address" type="text">
+        <input id="address" name="address" type="text" autocomplete="off">
       </fieldset>
       <fieldset class="ad-form__element">
         <label class="ad-form__label" for="type">Тип жилья</label>
@@ -148,34 +124,7 @@
         <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
         <input id="price" name="price" type="number" placeholder="1000" required pattern="^[0-9]+$" max="1000000">
       </fieldset>
-      <script>
-        const type = document.querySelector('#type');
-        const price = document.querySelector('#price');
-        type.onchange = () => {
-          switch (type.value) {
-            case 'bungalow':
-              price.min = 0;
-              price.placeholder= 0;
-              break;
-            case 'flat':
-              price.min = 1000;
-              price.placeholder= 1000;
-              break;
-            case 'hotel':
-              price.min = 3000;
-              price.placeholder = 3000;
-              break;
-            case 'house':
-              price.min = 5000;
-              price.placeholder = 5000;
-              break;
-            case 'palace':
-              price.min = 10000;
-              price.placeholder = 10000;
-              break;
-          }
-        };
-      </script>
+
       <fieldset class="ad-form__element ad-form__element--time">
         <label class="ad-form__label" for="timein">Время заезда и выезда</label>
         <select id="timein" name="timein">
@@ -188,14 +137,7 @@
           <option value="13:00">Выезд до 13</option>
           <option value="14:00">Выезд до 14</option>
         </select>
-        <script>
-          const timein = document.querySelector('#timein');
-          const timeout = document.querySelector('#timeout');
-          timein.onchange = () => {
-            timeout.disabled = false;
-            timeout.value = timein.value;
-          };
-        </script>
+
       </fieldset>
       <fieldset class="ad-form__element">
         <label class="ad-form__label" for="room_number">Количество комнат</label>
@@ -214,43 +156,7 @@
           <option value="1" selected>для 1 гостя</option>
           <option value="0">не для гостей</option>
         </select>
-        <script>
-          const roomNumber = document.querySelector('#room_number');
-          const capacity = document.querySelector('#capacity');
-          roomNumber.onchange = () => {
-            capacity.disabled = false;
-            switch (roomNumber.value) {
-              case '1':
-                capacity.value = '1';
-                capacity.children[2].classList.remove('hidden');
-                capacity.children[0].classList.add('hidden');
-                capacity.children[1].classList.add('hidden');
-                capacity.children[3].classList.add('hidden');
-                break;
-              case '100':
-                capacity.value = '0';
-                capacity.children[3].classList.remove('hidden');
-                capacity.children[0].classList.add('hidden');
-                capacity.children[1].classList.add('hidden');
-                capacity.children[2].classList.add('hidden');
-                break;
-              case '3':
-                capacity.value = '3';
-                capacity.children[0].classList.remove('hidden');
-                capacity.children[1].classList.remove('hidden');
-                capacity.children[2].classList.remove('hidden');
-                capacity.children[3].classList.add('hidden');
-                break;
-              case '2':
-                capacity.value = '2';
-                capacity.children[1].classList.remove('hidden');
-                capacity.children[2].classList.remove('hidden');
-                capacity.children[0].classList.add('hidden');
-                capacity.children[3].classList.add('hidden');
-                break;
-            }
-          };
-        </script>
+
       </fieldset>
       <fieldset class="ad-form__element ad-form__element--wide features">
         <legend>Удобства: Wi-Fi, кухня, парковка, стиралка, лифт, кондиционер</legend>
@@ -353,6 +259,9 @@
     <button type="button" class="error__button">Попробовать снова</button>
   </div>
 </template>
+<script src="./leaflet/leaflet/leaflet.js"></script>
+<script src="nouislider/nouislider.js"></script>
+<script src="pristine/pristine.min.js"></script>
 <script src="./js/main.js" type="module"></script>
 </body>
 </html>
