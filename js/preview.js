@@ -59,13 +59,19 @@ const addedData = (data) => {
     , выезд до ${data.offer.checkout}`;
   element.querySelector('.popup__description').textContent = data.offer.description;
   const photoOffer = element.querySelector('.popup__photos');
-  const images = data.offer.photos;
-  addedPhotos(images, photoOffer);
+  if (data.offer.photos) {
+    const images = data.offer.photos;
+    addedPhotos(images, photoOffer);
+  } else {
+    photoOffer.remove();
+  }
   const feature = data.offer.features;
   const popupFeatures = element.querySelector('.popup__features');
-
-  removedFeatures(feature, popupFeatures);
-
+  if (data.offer.features) {
+    removedFeatures(feature, popupFeatures);
+  } else {
+    popupFeatures.remove();
+  }
   return element;
 };
 

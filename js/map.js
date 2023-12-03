@@ -1,6 +1,5 @@
 import {addedData} from './preview.js';
-import { fetchData } from './api.js';
-
+import {fetchData} from './api.js';
 
 const LAT = 35.681729;
 const LNG = 139.753927;
@@ -14,7 +13,7 @@ const map = L.map(mapCanvas)
   .setView({
     lat: LAT,
     lng: LNG,
-  }, 11);
+  }, 13);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -46,7 +45,7 @@ const markerGroup = L.layerGroup().addTo(map);
 
 const showMarker = (elem) => {
 
-  const marker =  L.marker(
+  const marker = L.marker(
     {
       lat: +(elem.location.lat),
       lng: +(elem.location.lng),
@@ -65,13 +64,11 @@ const showMarker = (elem) => {
     .bindPopup(addedData(elem));
 };
 
-
 fetchData((data) => {
   data.forEach((elem) => {
     showMarker(elem);
   });
 });
-
 
 
 

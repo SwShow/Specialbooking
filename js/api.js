@@ -5,7 +5,7 @@ const fetchData = (onSuccess)  => {
     .then(response => response.json())
     .then((data) => onSuccess(data))
     .catch(() => {
-      onError('Сервер не отвечает');
+      onError('Что-то пошло не так...');
     });
 };
 

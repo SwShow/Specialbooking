@@ -2,6 +2,18 @@ import { postData } from './api.js';
 
 const housingType = document.querySelector('#housing-type');
 const housingPrice = document.querySelector('#housing-price');
+const adForm = document.querySelector('.ad-form');
+
+//const titleElement = adForm.querySelector('#title');
+const type = document.querySelector('#type');
+const price = document.querySelector('#price');
+const timein = document.querySelector('#timein');
+const timeout = document.querySelector('#timeout');
+const roomNumber = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
+//const addressElement = adForm.querySelector('#address');
+//const submitElement = adForm.querySelector('.ad-form__submit');
+
 housingType.onchange = () => {
   const changePrice = () => {
     switch (housingType.value) {
@@ -24,8 +36,6 @@ housingType.onchange = () => {
   changePrice();
 }
 
-const type = document.querySelector('#type');
-const price = document.querySelector('#price');
 type.onchange = () => {
   switch (type.value) {
     case 'bungalow':
@@ -51,15 +61,11 @@ type.onchange = () => {
   }
 };
 
-const timein = document.querySelector('#timein');
-const timeout = document.querySelector('#timeout');
 timein.onchange = () => {
   timeout.disabled = false;
   timeout.value = timein.value;
 };
 
-const roomNumber = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
 roomNumber.onchange = () => {
   capacity.disabled = false;
   switch (roomNumber.value) {
@@ -93,11 +99,22 @@ roomNumber.onchange = () => {
       break;
   }
 };
-const adForm = document.querySelector('.ad-form');
+
+// eslint-disable-next-line no-undef
+const pristine = new Pristine(adForm, {
+  classTo: 'ad-form__element',
+  errorTextParent: 'ad-form__element',
+  errorTextTag: 'div',
+  errorTextClass: 'ad-form__element--error',
+}, false);
 
 adForm.addEventListener('submit', (event) => {
+  const valid = pristine.validate();
   event.preventDefault();
-  return postData(new FormData(event.target));
+  if (valid) {
+    return postData(new FormData(event.target));
+  }
+
 });
 
 
