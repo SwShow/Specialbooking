@@ -13,7 +13,7 @@ const fetchData = (onSuccess)  => {
     });
 };
 
-const postData = (body) => {
+const postData = (body, buttonUnblock) => {
   fetch(URL.POST,
     {
       method: 'POST',
@@ -22,7 +22,7 @@ const postData = (body) => {
     })
     .then((response) => {
       if (!response.ok) {
-        //buttonUnblock();
+        buttonUnblock();
         Success();
 
       } else {
