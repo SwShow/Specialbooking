@@ -41,6 +41,7 @@ primaryMarker.on('drag', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
   address.value = `lat: ${lat.toFixed(6)}, lng: ${lng.toFixed(6)}`;
 });
+
 const markerGroup = L.layerGroup().addTo(map);
 
 const showMarker = (elem) => {
@@ -69,7 +70,6 @@ fetchData((data) => {
     showMarker(elem);
   });
 });
-
 
 
 

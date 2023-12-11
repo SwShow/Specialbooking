@@ -8,6 +8,9 @@ const Success = () => {
   document.addEventListener('keydown', () => {
     cloneSuccess.classList.add('hidden');
   });
+  cloneSuccess.addEventListener('click', () => {
+    cloneSuccess.classList.add('hidden');
+  });
   body.append(cloneSuccess);
 };
 

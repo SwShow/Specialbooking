@@ -1,8 +1,12 @@
-import {Error, onError, Success} from './data.js';
+import {onError, Success, Error} from './data.js';
 
+const URL = {
+  POST: 'https://26.javascript.pages.academy/keksobooking',
+  GET:'https://23.javascript.pages.academy/keksobooking/data',
+};
 const fetchData = (onSuccess)  => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
-    .then(response => response.json())
+  fetch(URL.GET)
+    .then((response) => response.json())
     .then((data) => onSuccess(data))
     .catch(() => {
       onError('Что-то пошло не так...');
@@ -10,20 +14,21 @@ const fetchData = (onSuccess)  => {
 };
 
 const postData = (body) => {
-  fetch('https://26.javascript.pages.academy/keksobooking',
+  fetch(URL.POST,
     {
       method: 'POST',
       body,
       type: 'multipart/form-data',
     })
     .then((response) => {
-      if (response.ok) {
+      if (!response.ok) {
+        //buttonUnblock();
         Success();
+
       } else {
-        Error();
+        onError(`${response  }OK`);
       }
     })
-
     .catch(() => {
       Error();
     });
