@@ -3,24 +3,15 @@ import {fetchData} from './api.js';
 
 const LAT = 35.681729;
 const LNG = 139.753927;
-
+const MAP_ZOOM = 13;
+const MARKER_ICON_SIZE = [52, 52];
+const MARKER_ICON_ANCHOR = [26, 52];
 const mapCanvas = document.querySelector('#map-canvas');
 const address = document.querySelector('#address');
 address.value = `lat: ${LAT}, lng: ${LNG}`;
 
 /* global L:readonly */
-const map = L.map(mapCanvas)
-  .setView({
-    lat: LAT,
-    lng: LNG,
-  }, 13);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const map = L.map(mapCanvas);
 
 const primaryMarker = L.marker(
   {
@@ -31,45 +22,72 @@ const primaryMarker = L.marker(
     draggable: true,
     icon: L.icon({
       iconUrl: './leaflet/img/main-pin.svg',
-      iconSize: [52, 52],
-      iconAnchor: [26, 52],
+      iconSize: MARKER_ICON_SIZE,
+      iconAnchor: MARKER_ICON_ANCHOR,
     }),
   },
-).addTo(map);
+);
 
-primaryMarker.on('drag', (evt) => {
-  const {lat, lng} = evt.target.getLatLng();
-  address.value = `lat: ${lat.toFixed(6)}, lng: ${lng.toFixed(6)}`;
-});
+const initMap = () => {
+  map.setView({
+    lat: LAT,
+    lng: LNG,
+  }, MAP_ZOOM);
 
-const markerGroup = L.layerGroup().addTo(map);
-
-const showMarker = (elem) => {
-
-  const marker = L.marker(
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-      lat: +(elem.location.lat),
-      lng: +(elem.location.lng),
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
-    {
-      icon: L.icon({
-        iconUrl: './leaflet/img/pin.svg',
-        iconSize: [52, 52],
-        iconAnchor: [26, 52],
-      }),
-    },
-  );
+  ).addTo(map);
 
-  marker
-    .addTo(markerGroup)
-    .bindPopup(addedData(elem));
+  primaryMarker.on('drag', (evt) => {
+    const {lat, lng} = evt.target.getLatLng();
+    address.value = `lat: ${lat.toFixed(6)}, lng: ${lng.toFixed(6)}`;
+  });
+  primaryMarker.addTo(map);
 };
 
-fetchData((data) => {
-  data.forEach((elem) => {
-    showMarker(elem);
+const markerGroup = L.layerGroup();
+const showGroupMarker = () => {
+  markerGroup.addTo(map);
+  const showMarker = (elem) => {
+    const marker = L.marker(
+      {
+        lat: +(elem.location.lat),
+        lng: +(elem.location.lng),
+      },
+      {
+        icon: L.icon({
+          iconUrl: './leaflet/img/pin.svg',
+          iconSize: MARKER_ICON_SIZE,
+          iconAnchor: MARKER_ICON_ANCHOR,
+        }),
+      },
+    );
+    marker
+      .addTo(markerGroup)
+      .bindPopup(addedData(elem));
+  };
+
+  fetchData((data) => {
+    data.forEach((elem) => {
+      showMarker(elem);
+    });
   });
-});
+};
 
+const resetMap = () => {
+  map.setView({
+    lat: LAT,
+    lng: LNG,
+  }, MAP_ZOOM);
+  primaryMarker.setLatLng({
+    lat: LAT,
+    lng: LNG,
+  });
+  map.closePopup();
+  address.value = `lat: ${LAT}, lng: ${LNG}`;
+};
 
-
+export { resetMap, initMap, showGroupMarker };

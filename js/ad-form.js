@@ -1,12 +1,16 @@
 import { postData } from './api.js';
-import { Error } from './data.js'
+import { Error } from './data.js';
+import { resetMap } from './map.js';
 
 const adForm = document.querySelector('.ad-form');
+const mapFilters = document.querySelectorAll('.map__filter');
+const housingFeatures = document.querySelectorAll('[name="features"]');
 const titleFieldElement = adForm.querySelector('[name="title"]');
 const formButton = adForm.querySelector('.ad-form__submit');
 const formAddress = adForm.querySelector('[name="address"]');
 const formPrice = adForm.querySelector('[name="price"]');
 const formTypeHouse = adForm.querySelector('#type').value;
+const TEXT_LENGTH = 30;
 
 const buttonBlock = () => {
   formButton.disabled = 'true';
@@ -21,7 +25,7 @@ const pristine = new Pristine(adForm, {
 });
 const checkLength = (value) => {
   const text = value.split(' ');
-  return text.every((item) => item.length <= 30);
+  return text.every((item) => item.length <= TEXT_LENGTH);
 };
 
 const checkAddress = (value) => {
@@ -44,14 +48,33 @@ const buttonUnBlock = () => {
   formButton.removeAttribute('disabled');
   formButton.textContent = 'Опубликовать';
 };
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const valid = pristine.validate();
-  if(valid) {
-    buttonBlock();
-    postData(new FormData(evt.target), buttonUnBlock);
-  } else {
-    Error();
-  }
-});
 
+const addMapHouse = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const valid = pristine.validate();
+    if(valid) {
+      buttonBlock();
+      postData(new FormData(evt.target), buttonUnBlock);
+      evt.target.reset();
+      resetMap();
+    } else {
+      Error();
+    }
+  });
+};
+
+
+const formDisabled = () => {
+  adForm.classList.add('ad-form--disabled');
+  mapFilters.forEach((elem) => elem.disabled = true);
+  housingFeatures.forEach((elem) => elem.disabled = true);
+};
+
+const formEnabled = () => {
+  adForm.classList.remove('ad-form--disabled');
+  mapFilters.forEach((elem) => elem.disabled = false);
+  housingFeatures.forEach((elem) => elem.disabled = false);
+};
+
+export { addMapHouse, formDisabled, formEnabled };
