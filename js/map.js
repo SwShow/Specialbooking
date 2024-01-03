@@ -50,6 +50,7 @@ const initMap = () => {
 
 const markerGroup = L.layerGroup();
 const showGroupMarker = () => {
+  markerGroup.clearLayers();
   markerGroup.addTo(map);
   const showMarker = (elem) => {
     const marker = L.marker(

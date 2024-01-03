@@ -1,3 +1,5 @@
+import { showGroupMarker} from './map.js';
+
 const housingType = document.querySelector('#housing-type');
 const housingPrice = document.querySelector('#housing-price');
 const type = document.querySelector('#type');
@@ -27,7 +29,7 @@ housingType.onchange = () => {
       case 'house':
         housingPrice.value = 'middle';
         break;
-      case 'hostel':
+      case 'hotel':
         housingPrice.value = 'middle';
         break;
       case 'palace':
@@ -35,6 +37,7 @@ housingType.onchange = () => {
     }
   }
   changePrice();
+  showGroupMarker();
 }
 
 type.onchange = () => {
@@ -81,3 +84,5 @@ roomNumber.onchange = () => {
       break;
   }
 };
+
+export { housingType };
