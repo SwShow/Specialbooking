@@ -1,7 +1,18 @@
 import { showGroupMarker} from './map.js';
+const debounce = (cb, timer) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => cb.apply(this, args), timer);
+  };
+};
 
-const housingType = document.querySelector('#housing-type');
-const housingPrice = document.querySelector('#housing-price');
+const DEBOUNCE_TIMER = 1000;
+const mapFilter = document.querySelector('.map__filters');
+const housingType = mapFilter.querySelector('#housing-type');
+const housingPrice = mapFilter.querySelector('#housing-price');
+const housingGuests = mapFilter.querySelector('#housing-guests');
+const housingRoom = mapFilter.querySelector('#housing-rooms');
 const type = document.querySelector('#type');
 const price = document.querySelector('#price');
 const timein = document.querySelector('#timein');
@@ -85,4 +96,7 @@ roomNumber.onchange = () => {
   }
 };
 
-export { housingType };
+mapFilter.addEventListener('change', debounce(() =>
+  showGroupMarker(), DEBOUNCE_TIMER));
+
+export { housingType, housingPrice, housingRoom, housingGuests, mapFilter };

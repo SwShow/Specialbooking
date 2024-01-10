@@ -17,6 +17,7 @@ const buttonBlock = () => {
   formButton.textContent = 'Опубликовываю...';
 };
 
+// eslint-disable-next-line no-undef
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
@@ -77,4 +78,4 @@ const formEnabled = () => {
   housingFeatures.forEach((elem) => elem.disabled = false);
 };
 
-export { addMapHouse, formDisabled, formEnabled };
+export { addMapHouse, formDisabled, formEnabled, mapFilters };

@@ -1,5 +1,5 @@
 import {onError, Success, Error} from './data.js';
-import {filterType} from './filter.js';
+import {filterData} from './filter.js';
 
 const URL = {
   POST: 'https://26.javascript.pages.academy/keksobooking',
@@ -18,7 +18,7 @@ const URL = {
 const fetchData = (onSuccess)  => {
   fetch(URL.GET)
     .then((response) => response.json())
-    .then((quantity) => filterType(quantity))
+    .then((quantity) => filterData(quantity))
     .then((data) => onSuccess(data))
     .catch(() => {
       onError('Что-то пошло не так...');
