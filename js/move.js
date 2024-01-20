@@ -1,4 +1,7 @@
 import { showGroupMarker} from './map.js';
+
+// eslint-disable-next-line no-undef
+Logger.useDefaults();
 const debounce = (cb, timer) => {
   let timeoutId;
   return (...args) => {
@@ -13,20 +16,60 @@ const housingType = mapFilter.querySelector('#housing-type');
 const housingPrice = mapFilter.querySelector('#housing-price');
 const housingGuests = mapFilter.querySelector('#housing-guests');
 const housingRoom = mapFilter.querySelector('#housing-rooms');
-const type = document.querySelector('#type');
-const price = document.querySelector('#price');
-const timein = document.querySelector('#timein');
-const timeout = document.querySelector('#timeout');
-const roomNumber = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
+const adForm = document.querySelector('.ad-form');
+const type = adForm.querySelector('#type');
+const price = adForm.querySelector('#price');
+const timein = adForm.querySelector('#timein');
+const timeout = adForm.querySelector('#timeout');
+const roomNumber = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+const TYPEFLAT_MAX = 50000;
 
-const TYPEFLAT = {
+const TYPEFLAT_MIN = {
   'bungalow': 0,
   'flat': 1000,
   'hotel': 3000,
   'house': 5000,
   'palace': 10000,
 };
+
+const slider = document.createElement('div');
+slider.setAttribute('id', 'noUi-connect');
+// eslint-disable-next-line no-undef
+noUiSlider.create(slider, {
+  start: 5000,
+  connect: 'lower',
+  range: {
+    'min': 0,
+    'max': TYPEFLAT_MAX,
+  },
+  step: 1,
+});
+
+slider.style.width = '92%';
+
+adForm.children[4].appendChild(slider);
+type.addEventListener('change',  (evt) => {
+  const val = evt.target.value;
+  slider.noUiSlider.set(TYPEFLAT_MIN[val]);
+  price.value = '';
+  price.placeholder = TYPEFLAT_MIN[val];
+});
+
+slider.noUiSlider.on('update', () => {
+  price.value = (slider.noUiSlider.getPositions()) * 500;
+});
+price.addEventListener('click', () => {
+  slider.noUiSlider.set(price.value);
+});
+
+const resetSlider = () => {
+  slider.noUiSlider.reset();
+};
+
+adForm.addEventListener('reset', () => {
+  resetSlider();
+});
 
 housingType.onchange = () => {
   const changePrice = () => {
@@ -51,19 +94,11 @@ housingType.onchange = () => {
   showGroupMarker();
 }
 
-type.onchange = () => {
-  const val = type.value;
-  price.min = TYPEFLAT[val];
-  price.placeholder = TYPEFLAT[val];
-};
-
 timein.onchange = () => {
-  timeout.disabled = false;
   timeout.value = timein.value;
 };
 
 roomNumber.onchange = () => {
-  capacity.disabled = false;
   switch (roomNumber.value) {
     case '1':
       capacity.value = '1';
@@ -99,4 +134,5 @@ roomNumber.onchange = () => {
 mapFilter.addEventListener('change', debounce(() =>
   showGroupMarker(), DEBOUNCE_TIMER));
 
-export { housingType, housingPrice, housingRoom, housingGuests, mapFilter };
+export { adForm, housingType, housingPrice, housingRoom, housingGuests, mapFilter,
+  resetSlider };

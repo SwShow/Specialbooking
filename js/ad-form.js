@@ -1,15 +1,17 @@
 import { postData } from './api.js';
 import { Error } from './data.js';
 import { resetMap } from './map.js';
+import { adForm, resetSlider } from './move.js';
 
-const adForm = document.querySelector('.ad-form');
+// eslint-disable-next-line no-undef
+Logger.useDefaults();
 const mapFilters = document.querySelectorAll('.map__filter');
 const housingFeatures = document.querySelectorAll('[name="features"]');
 const titleFieldElement = adForm.querySelector('[name="title"]');
 const formButton = adForm.querySelector('.ad-form__submit');
 const formAddress = adForm.querySelector('[name="address"]');
 const formPrice = adForm.querySelector('[name="price"]');
-const formTypeHouse = adForm.querySelector('#type').value;
+const type = adForm.querySelector('#type');
 const TEXT_LENGTH = 30;
 
 const buttonBlock = () => {
@@ -26,21 +28,24 @@ const pristine = new Pristine(adForm, {
 });
 const checkLength = (value) => {
   const text = value.split(' ');
-  return text.every((item) => item.length <= TEXT_LENGTH);
+  return text.length <= TEXT_LENGTH;
 };
 
 const checkAddress = (value) => {
   return !(value === '');
-}
+};
 
 const checkPrice = (value) => {
-  switch (formTypeHouse) {
+  // eslint-disable-next-line no-undef
+  Logger.info(`вводимая цена: ${value}`);
+  switch (type.value) {
     case 'bungalow': return value > 0;
-    case 'flat': return value > 5000;
+    case 'flat': return value > 1000;
+    case 'hotel': return value > 3000;
     case 'house': return value > 5000;
     case 'palace': return value > 10000;
   }
-}
+};
 
 pristine.addValidator(titleFieldElement, checkLength);
 pristine.addValidator(formAddress, checkAddress);
@@ -59,12 +64,12 @@ const addMapHouse = () => {
       postData(new FormData(evt.target), buttonUnBlock);
       evt.target.reset();
       resetMap();
+      resetSlider();
     } else {
       Error();
     }
   });
 };
-
 
 const formDisabled = () => {
   adForm.classList.add('ad-form--disabled');

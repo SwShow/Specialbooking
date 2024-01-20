@@ -17,6 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "js-logger": "^1.6.1",
     "lodash": "^4.17.21"
   },
   "scripts": {

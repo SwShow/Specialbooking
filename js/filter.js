@@ -1,29 +1,21 @@
 import { housingGuests, housingPrice, housingRoom, housingType } from './move.js';
 
-//const mapCheckbox = document.querySelectorAll('.map__checkbox');
+const mapCheckbox = document.querySelectorAll('.map__checkbox');
 
 const PRICE = {
   'min': 10000,
   'max': 50000,
 };
 
-/*const boxCheckbox = () => {
+const boxCheckbox = (checkbox) => {
   const box = [];
-  mapCheckbox.forEach((el) => {
+  checkbox.forEach((el) => {
     if (el.checked) {
       box.push(el.value);
     }
-    return box;
   });
+  return box;
 };
-
-const offerFutures = (elem) => {
-  let arrFutures = [];
-  if (elem.offer.features) {
-    arrFutures = elem.offer.features;
-  }
-  return arrFutures;
-};*/
 
 const filterData = (data) => {
   if (!(housingType.value === 'any')) {
@@ -47,10 +39,15 @@ const filterData = (data) => {
   if (!(housingGuests.value === 'any')) {
     data = data.filter((elem) => elem.offer.guests === +(housingGuests.value));
   }
-  /*data = data.filter((elem) =>  {return offerFutures(elem).forEach((e) => {
-    boxCheckbox.contains(e);
+  data = data.filter((elem) =>  {
+    let box = boxCheckbox(mapCheckbox);
+    if (!(box.length)) {
+      return !(elem.offer.features);
+    } else if (elem.offer.features) {
+      let feat = elem.offer.features;
+      return feat.every((e) => box.includes(e));
+    }
   });
-  });*/
   return data.slice(0, 10);
 };
 

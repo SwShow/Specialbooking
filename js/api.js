@@ -5,15 +5,6 @@ const URL = {
   POST: 'https://26.javascript.pages.academy/keksobooking',
   GET:'https://23.javascript.pages.academy/keksobooking/data',
 };
-// рабочий вариант получения всех данных с сервера
-/*const fetchData = (onSuccess)  => {
-  fetch(URL.GET)
-    .then((response) => response.json())
-    .then((data) => onSuccess(data))
-    .catch(() => {
-      onError('Что-то пошло не так...');
-    });
-};*/
 
 const fetchData = (onSuccess)  => {
   fetch(URL.GET)
