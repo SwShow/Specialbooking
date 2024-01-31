@@ -1,6 +1,7 @@
-/*Функция, возвращающая случайное целое число из переданного диапазона включительно.*/
+// -- подготовка данных для разработки приложения без получения их из базы
 import {check, descriptions, meanFeatures, meanPhotos, types} from './data.js';
 
+// -- Функция, возвращающая случайное целое число из переданного диапазона включительно.
 const randInt = (min, max) => {
   if (min < 0 || max < 0) {
     return -1;
@@ -11,8 +12,7 @@ const randInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/*
-Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно. */
+// -- Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно.
 const randSwimPoint = (min, max) => {
   if (min < 0 || max < 0) {
     return -1;
@@ -27,7 +27,6 @@ const location = (a, b) => {
   return randSwimPoint(a, b);
 }
 
-
 const coordinates = () => {
   return {
     lat: location(35.55000, 35.80000),
@@ -36,8 +35,8 @@ const coordinates = () => {
 }
 
 const shuffle = (mean) => {
-  let arr = [];// возвращаемый массив
-  let l = [];// массив для добавления использованных ключей
+  let arr = [];
+  let l = [];
   for (let i = 0; i < mean.length; i++) {
     let k = randInt(0, mean.length - 1);
     if (l.includes(k)) {
@@ -49,7 +48,7 @@ const shuffle = (mean) => {
   return arr;
 }
 
-// создание элемента массива
+// -- создание элемента массива
 const arrays = () => {
   return {
     author: {

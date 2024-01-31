@@ -69,9 +69,7 @@ const onError = (message) => {
   messageError.style.fontSize = '30px';
   messageError.style.textAlign = 'center';
   messageError.style.backgroundColor = 'red';
-
   messageError.textContent = message;
-
   document.body.append(messageError);
 
   setTimeout(() => {

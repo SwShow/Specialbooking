@@ -3,7 +3,7 @@ import {filterData} from './filter.js';
 
 const URL = {
   POST: 'https://26.javascript.pages.academy/keksobooking',
-  GET:'https://23.javascript.pages.academy/keksobooking/data',
+  GET: 'https://23.javascript.htmlacademy.pro/keksobooking/data',
 };
 
 const fetchData = (onSuccess)  => {
@@ -15,6 +15,7 @@ const fetchData = (onSuccess)  => {
       onError('Что-то пошло не так...');
     });
 };
+
 const postData = (body, buttonUnblock) => {
   fetch(URL.POST,
     {

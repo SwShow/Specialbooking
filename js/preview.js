@@ -39,6 +39,8 @@ const removedFeatures = (feature, popupFeatures) => {
   }
   return popupFeatures;
 };
+
+// -- всплывающее окно (попап)
 const addedData = (data) => {
 
   const element = card.cloneNode(true);

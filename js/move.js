@@ -1,7 +1,10 @@
 import { showGroupMarker} from './map.js';
+import { renderHouse, avatar} from './ad-foto.js';
 
 // eslint-disable-next-line no-undef
 Logger.useDefaults();
+
+// -- функция устранения дребезга
 const debounce = (cb, timer) => {
   let timeoutId;
   return (...args) => {
@@ -23,7 +26,17 @@ const timein = adForm.querySelector('#timein');
 const timeout = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+
 const TYPEFLAT_MAX = 50000;
+
+const TYPEFLAT_GRAD = {
+  'any': 'any',
+  'flat': 'middle',
+  'house': 'middle',
+  'hotel': 'middle',
+  'bungalow': 'low',
+  'palace': 'high',
+};
 
 const TYPEFLAT_MIN = {
   'bungalow': 0,
@@ -33,6 +46,7 @@ const TYPEFLAT_MIN = {
   'palace': 10000,
 };
 
+// -- инициализация слайдера
 const slider = document.createElement('div');
 slider.setAttribute('id', 'noUi-connect');
 // eslint-disable-next-line no-undef
@@ -49,6 +63,8 @@ noUiSlider.create(slider, {
 slider.style.width = '92%';
 
 adForm.children[4].appendChild(slider);
+
+// -- изменение прайса в зависимости от типа жилья
 type.addEventListener('change',  (evt) => {
   const val = evt.target.value;
   slider.noUiSlider.set(TYPEFLAT_MIN[val]);
@@ -56,9 +72,12 @@ type.addEventListener('change',  (evt) => {
   price.placeholder = TYPEFLAT_MIN[val];
 });
 
+// -- изменение прайса в зависимости от положения курсора на слайдере
 slider.noUiSlider.on('update', () => {
   price.value = (slider.noUiSlider.getPositions()) * 500;
 });
+
+// -- изменение положения курсора на слайдере в зависимости от ввода цены в поле прайса
 price.addEventListener('click', () => {
   slider.noUiSlider.set(price.value);
 });
@@ -67,37 +86,35 @@ const resetSlider = () => {
   slider.noUiSlider.reset();
 };
 
+// -- удаление фотографий жилья
+const deleteChild = () => {
+  let child = renderHouse.lastElementChild;
+  while (child) {
+    renderHouse.removeChild(child);
+    child = renderHouse.lastElementChild;
+  }
+};
+
+// -- сброс формы
 adForm.addEventListener('reset', () => {
   resetSlider();
+  // --- удалить фото
+  avatar.src = 'img/muffin-grey.svg';
+  deleteChild();
 });
 
+// -- фильтрация маркеров по типу жилья
 housingType.onchange = () => {
-  const changePrice = () => {
-    switch (housingType.value) {
-      case 'flat':
-        housingPrice.value = 'middle';
-        break;
-      case 'bungalow':
-        housingPrice.value = 'low';
-        break;
-      case 'house':
-        housingPrice.value = 'middle';
-        break;
-      case 'hotel':
-        housingPrice.value = 'middle';
-        break;
-      case 'palace':
-        housingPrice.value = 'high';
-    }
-  }
-  changePrice();
+  housingPrice.value = TYPEFLAT_GRAD[housingType.value];
   showGroupMarker();
-}
+};
 
+// -- изменение времени выезда при изменении времени заезда
 timein.onchange = () => {
   timeout.value = timein.value;
 };
 
+// -- показ возможного количества гостей в зависимости от количества комнат
 roomNumber.onchange = () => {
   switch (roomNumber.value) {
     case '1':

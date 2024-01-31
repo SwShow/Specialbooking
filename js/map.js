@@ -28,6 +28,7 @@ const primaryMarker = L.marker(
   },
 );
 
+// -- инициализация карты
 const initMap = () => {
   map.setView({
     lat: LAT,
@@ -40,7 +41,7 @@ const initMap = () => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-
+  // -- отрисовка главного маркера на карте
   primaryMarker.on('drag', (evt) => {
     const {lat, lng} = evt.target.getLatLng();
     address.value = `lat: ${lat.toFixed(6)}, lng: ${lng.toFixed(6)}`;
@@ -49,6 +50,8 @@ const initMap = () => {
 };
 
 const markerGroup = L.layerGroup();
+
+// -- отрисовка полученных данных на карте
 const showGroupMarker = () => {
   markerGroup.clearLayers();
   markerGroup.addTo(map);
@@ -70,7 +73,7 @@ const showGroupMarker = () => {
       .addTo(markerGroup)
       .bindPopup(addedData(elem));
   };
-
+  // -- запрос данных со стороннего сайта
   fetchData((data) => {
     data.forEach((elem) => {
       showMarker(elem);
@@ -78,6 +81,7 @@ const showGroupMarker = () => {
   });
 };
 
+// -- сброс карты к первоначальному значению
 const resetMap = () => {
   map.setView({
     lat: LAT,

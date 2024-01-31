@@ -14,6 +14,7 @@ const formPrice = adForm.querySelector('[name="price"]');
 const type = adForm.querySelector('#type');
 const TEXT_LENGTH = 30;
 
+// -- блокировать кнопки
 const buttonBlock = () => {
   formButton.disabled = 'true';
   formButton.textContent = 'Опубликовываю...';
@@ -26,6 +27,7 @@ const pristine = new Pristine(adForm, {
   errorTextTag: 'div',
   errorTextClass: 'ad-form__element--error',
 });
+
 const checkLength = (value) => {
   const text = value.split(' ');
   return text.length <= TEXT_LENGTH;
@@ -50,11 +52,13 @@ const checkPrice = (value) => {
 pristine.addValidator(titleFieldElement, checkLength);
 pristine.addValidator(formAddress, checkAddress);
 pristine.addValidator(formPrice, checkPrice);
+
+// -- разблокировать кнопки
 const buttonUnBlock = () => {
   formButton.removeAttribute('disabled');
   formButton.textContent = 'Опубликовать';
 };
-
+// -- отправить данные формы
 const addMapHouse = () => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
